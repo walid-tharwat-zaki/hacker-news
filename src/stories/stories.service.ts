@@ -1,26 +1,42 @@
 import { Injectable } from '@nestjs/common';
-import { CreateStoryDto } from './dto/create-story.dto';
-import { UpdateStoryDto } from './dto/update-story.dto';
+import { StoriesAPIService } from './stories-api.service';
+import { StoriesStatisticsUtils } from './utils/stories-statistics.utils';
 
 @Injectable()
 export class StoriesService {
-  create(createStoryDto: CreateStoryDto) {
-    return 'This action adds a new story';
+  constructor(private readonly storiesAPIService: StoriesAPIService) {}
+
+  async getMostOccurring(count: number, wordsCount: number) {
+    const stories = await this.storiesAPIService.getLatestStories(count);
+    return StoriesStatisticsUtils.getMostOccurringWordsInTitles(
+      stories,
+      wordsCount,
+    );
   }
 
-  findAll() {
-    return `This action returns all stories`;
+  async getLastWeek(wordsCount: number) {
+    const date = new Date().getTime() / 1000;
+    const weekAgo = date - 7 * 24 * 3600;
+    const stories = await this.storiesAPIService.getPostsByDate(weekAgo);
+    return StoriesStatisticsUtils.getMostOccurringWordsInTitles(
+      stories,
+      wordsCount,
+    );
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} story`;
-  }
-
-  update(id: number, updateStoryDto: UpdateStoryDto) {
-    return `This action updates a #${id} story`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} story`;
+  async getByUserKarma(
+    count: number,
+    minimumKarma: number,
+    wordsCount: number,
+  ) {
+    const stories =
+      await this.storiesAPIService.getLatestStoriesWithUsersMinimumKarma(
+        count,
+        minimumKarma,
+      );
+    return StoriesStatisticsUtils.getMostOccurringWordsInTitles(
+      stories,
+      wordsCount,
+    );
   }
 }

@@ -1,34 +1,41 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Query } from '@nestjs/common';
 import { StoriesService } from './stories.service';
-import { CreateStoryDto } from './dto/create-story.dto';
-import { UpdateStoryDto } from './dto/update-story.dto';
 
 @Controller('stories')
 export class StoriesController {
   constructor(private readonly storiesService: StoriesService) {}
 
-  @Post()
-  create(@Body() createStoryDto: CreateStoryDto) {
-    return this.storiesService.create(createStoryDto);
+  @Get('most-occurring')
+  async getMostOccurring(
+    @Query('count') count: number,
+    @Query('words') wordsCount: number,
+  ) {
+    const mostOccurring = await this.storiesService.getMostOccurring(
+      count ?? 25,
+      wordsCount ?? 10,
+    );
+    return mostOccurring;
   }
 
-  @Get()
-  findAll() {
-    return this.storiesService.findAll();
+  @Get('last-week')
+  async getLastWeek(@Query('words') wordsCount: number) {
+    const mostOccurring = await this.storiesService.getLastWeek(
+      wordsCount ?? 10,
+    );
+    return mostOccurring;
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.storiesService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateStoryDto: UpdateStoryDto) {
-    return this.storiesService.update(+id, updateStoryDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.storiesService.remove(+id);
+  @Get('user-karma')
+  async getByUserKarma(
+    @Query('count') count: number,
+    @Query('minimum-karma') minimumKarma: number,
+    @Query('words') wordsCount: number,
+  ) {
+    const mostOccurring = await this.storiesService.getByUserKarma(
+      count ?? 600,
+      minimumKarma ?? 10000,
+      wordsCount ?? 10,
+    );
+    return mostOccurring;
   }
 }
