@@ -5,4 +5,5 @@ export class Item {
   time: number;
   type: ItemType;
   by: string;
+  deleted: boolean;
 }

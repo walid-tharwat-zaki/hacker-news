@@ -28,19 +28,26 @@ export class StoriesAPIService {
       .data;
     let currentMax = maxId;
     let allFound = false;
-    const NUMBER_OF_REQUESTS = 100;
+    const NUMBER_OF_REQUESTS = 1000;
     const temp = Array(NUMBER_OF_REQUESTS).fill('');
     const stories: Item[] = [];
     do {
-      const items: Item[] = await Promise.all(
-        temp.map(
-          async (e, i) =>
-            (
-              await axios.get(`${this.BASE_URL}/item/${currentMax - i}.json`)
-            ).data,
-        ),
-      );
-      if (items[NUMBER_OF_REQUESTS - 1].time > fromDateUnixTime) {
+      const items: Item[] = (
+        await Promise.all(
+          temp.map(async (e, i) => {
+            try {
+              return (
+                await axios.get(`${this.BASE_URL}/item/${currentMax - i}.json`)
+              ).data;
+            } catch (err) {
+              console.log('Error : ', currentMax - i);
+              return null;
+            }
+          }),
+        )
+      ).filter((item) => item);
+      console.log('Time : ', items[items.length - 1].time);
+      if (items[items.length - 1].time > fromDateUnixTime) {
         stories.push(...items.filter((item) => item.type == ItemType.STORY));
       } else {
         for (let item of items) {
@@ -67,18 +74,27 @@ export class StoriesAPIService {
     let currentMax = maxId;
     const foundUsers = {};
     const foundStories = [];
-    const NUMBER_OF_REQUESTS = 100;
+    const NUMBER_OF_REQUESTS = 1000;
     const temp = Array(NUMBER_OF_REQUESTS).fill('');
     do {
-      const items: Item[] = await Promise.all(
-        temp.map(
-          async (e, i) =>
-            (
-              await axios.get(`${this.BASE_URL}/item/${currentMax - i}.json`)
-            ).data,
-        ),
-      );
-      for (let item of items) {
+      const items: Item[] = (
+        await Promise.all(
+          temp.map(async (e, i) => {
+            try {
+              return (
+                await axios.get(`${this.BASE_URL}/item/${currentMax - i}.json`)
+              ).data;
+            } catch (err) {
+              console.log('Error : ', currentMax - i);
+              return null;
+            }
+          }),
+        )
+      ).filter((item) => item);
+      forLoop: for (let item of items) {
+        if (item.deleted) {
+          continue;
+        }
         switch (item.type) {
           case ItemType.STORY:
             if (!foundUsers[item.by]) {
@@ -88,10 +104,14 @@ export class StoriesAPIService {
             }
             if (foundUsers[item.by].karma >= userMinimumKarma) {
               foundStories.push(item);
+              if (foundStories.length == count) {
+                break forLoop;
+              }
             }
             break;
         }
       }
+      currentMax -= NUMBER_OF_REQUESTS;
     } while (foundStories.length < count);
     return foundStories;
   }
