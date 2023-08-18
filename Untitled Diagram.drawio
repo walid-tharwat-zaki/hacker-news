@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-08-18T11:31:56.974Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5.1 Safari/605.1.15" etag="75FPhKR1fBAHJHeULsvD" version="21.6.8" type="github">
+<mxfile host="app.diagrams.net" modified="2023-08-18T11:35:37.452Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5.1 Safari/605.1.15" etag="wBPeqcCTx38THoQHBhqt" version="21.6.8" type="github">
   <diagram name="Page-1" id="h78i4w3jpvMDHuVKvQ0y">
     <mxGraphModel dx="815" dy="551" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -137,6 +137,12 @@
               <mxPoint x="520" y="670" />
             </Array>
           </mxGeometry>
+        </mxCell>
+        <mxCell id="lDMrGSyHlphn9_t9U18--33" value="&lt;ul&gt;&lt;li&gt;Agent can handle all cases without any additional actions&lt;/li&gt;&lt;li&gt;User has only one contract&lt;/li&gt;&lt;li&gt;User can&#39;t submit more than 1 active claim&lt;/li&gt;&lt;/ul&gt;" style="text;strokeColor=none;fillColor=none;html=1;whiteSpace=wrap;verticalAlign=middle;overflow=hidden;" vertex="1" parent="1">
+          <mxGeometry x="20" y="760" width="360" height="80" as="geometry" />
+        </mxCell>
+        <mxCell id="lDMrGSyHlphn9_t9U18--34" value="Assumptions :" style="text;strokeColor=none;fillColor=none;html=1;fontSize=24;fontStyle=1;verticalAlign=middle;align=center;" vertex="1" parent="1">
+          <mxGeometry x="70" y="720" width="100" height="40" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
