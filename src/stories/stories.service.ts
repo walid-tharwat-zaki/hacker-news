@@ -16,7 +16,7 @@ export class StoriesService {
 
   async getLastWeek(wordsCount: number) {
     const date = new Date().getTime() / 1000;
-    const weekAgo = date - 0.1 * 24 * 3600;
+    const weekAgo = date - 7 * 24 * 3600;
     const stories = await this.storiesAPIService.getPostsByDate(weekAgo);
     return StoriesStatisticsUtils.getMostOccurringWordsInTitles(
       stories,

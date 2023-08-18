@@ -32,7 +32,7 @@ export class StoriesController {
     @Query('words') wordsCount: number,
   ) {
     const mostOccurring = await this.storiesService.getByUserKarma(
-      count ?? 100,
+      count ?? 600,
       minimumKarma ?? 10000,
       wordsCount ?? 10,
     );
