@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2023-08-18T11:28:40.062Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5.1 Safari/605.1.15" etag="FJOofP0zOZ_JX7FUV4gx" version="21.6.8" type="github">
+<mxfile host="app.diagrams.net" modified="2023-08-18T11:31:29.126Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.5.1 Safari/605.1.15" etag="yacDWE-AOdiVCTZwSvw1" version="21.6.8" type="github">
   <diagram name="Page-1" id="h78i4w3jpvMDHuVKvQ0y">
     <mxGraphModel dx="815" dy="551" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
@@ -123,16 +123,20 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="lDMrGSyHlphn9_t9U18--30" value="Claims" style="swimlane;childLayout=stackLayout;horizontal=1;startSize=50;horizontalStack=0;rounded=1;fontSize=14;fontStyle=0;strokeWidth=2;resizeParent=0;resizeLast=1;shadow=0;dashed=0;align=center;arcSize=4;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="465" y="720" width="160" height="120" as="geometry" />
+          <mxGeometry x="460" y="760" width="175" height="150" as="geometry" />
         </mxCell>
-        <mxCell id="lDMrGSyHlphn9_t9U18--32" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="lDMrGSyHlphn9_t9U18--30">
+        <mxCell id="lDMrGSyHlphn9_t9U18--31" value="+Id&lt;br&gt;+ClientId&lt;br&gt;+Photo&lt;br&gt;+parsedData (ex: amount)&lt;br&gt;+status&lt;br&gt;+operator" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="lDMrGSyHlphn9_t9U18--30">
+          <mxGeometry y="50" width="175" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="lDMrGSyHlphn9_t9U18--32" value="" style="edgeStyle=entityRelationEdgeStyle;fontSize=12;html=1;endArrow=ERoneToMany;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" edge="1" parent="1" source="lDMrGSyHlphn9_t9U18--26">
           <mxGeometry width="100" height="100" relative="1" as="geometry">
-            <mxPoint x="90" y="-100" as="sourcePoint" />
-            <mxPoint x="95" as="targetPoint" />
+            <mxPoint x="540" y="670" as="sourcePoint" />
+            <mxPoint x="450" y="840" as="targetPoint" />
+            <Array as="points">
+              <mxPoint x="545" y="620" />
+              <mxPoint x="520" y="670" />
+            </Array>
           </mxGeometry>
-        </mxCell>
-        <mxCell id="lDMrGSyHlphn9_t9U18--31" value="+Id&lt;br&gt;+Photo&lt;br&gt;+parsedData (ex: amount)&lt;br&gt;+status" style="align=left;strokeColor=none;fillColor=none;spacingLeft=4;fontSize=12;verticalAlign=top;resizable=0;rotatable=0;part=1;html=1;" vertex="1" parent="lDMrGSyHlphn9_t9U18--30">
-          <mxGeometry y="50" width="160" height="70" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
