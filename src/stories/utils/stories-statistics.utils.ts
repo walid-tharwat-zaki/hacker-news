@@ -33,7 +33,9 @@ export class StoriesStatisticsUtils {
   static getMostOccurringWordsInTitles(stories: Item[], count: number) {
     const titlesWords = stories
       .filter((story) => !story.deleted)
-      .map((story) => story.title?.split(' ') ?? [])
+      .map(
+        (story) => story.title?.split(' ').filter((keyword) => keyword) ?? [],
+      )
       .flat();
     const wordsOccurrence = Object.entries(
       titlesWords.reduce(
@@ -58,6 +60,9 @@ export class StoriesStatisticsUtils {
         topWords[index] = word;
       }
     }
-    return topWords.splice(0, 10).map((item) => item[0]);
+    return topWords
+      .filter((word) => (word[1] as number) > 0)
+      .splice(0, 10)
+      .map((item) => item[0]);
   }
 }

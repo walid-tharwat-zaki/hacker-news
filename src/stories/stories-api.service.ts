@@ -7,7 +7,7 @@ import { ItemType } from './constants/item.enum';
 export class StoriesAPIService {
   BASE_URL = 'https://hacker-news.firebaseio.com/v0';
 
-  async getLatestStories(count: number) {
+  async getLatestStories(count: number): Promise<Item[]> {
     const allStoriesIds: number[] = (
       await axios.get(`${this.BASE_URL}/newstories.json`)
     ).data;
