@@ -82,10 +82,14 @@ export class StoriesAPIService {
     }
   }
 
+  async getAuthor(name: string) {
+    return (await axios.get(`${this.BASE_URL}/user/${name}.json`)).data;
+  }
+
   async getLatestStoriesWithUsersMinimumKarma(
     count: number,
     userMinimumKarma: number,
-  ) {
+  ): Promise<Item[]> {
     const maxId: number = (await axios.get(`${this.BASE_URL}/maxitem.json`))
       .data;
     let currentMax = maxId;
@@ -115,9 +119,7 @@ export class StoriesAPIService {
         switch (item.type) {
           case ItemType.STORY:
             if (!foundUsers[item.by]) {
-              foundUsers[item.by] = (
-                await axios.get(`${this.BASE_URL}/user/${item.by}.json`)
-              ).data;
+              foundUsers[item.by] = await this.getAuthor(item.by);
             }
             if (foundUsers[item.by].karma >= userMinimumKarma) {
               foundStories.push(item);

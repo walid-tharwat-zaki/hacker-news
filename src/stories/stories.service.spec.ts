@@ -62,4 +62,18 @@ describe('StoriesService', () => {
     );
     expect(oneStoryBefore.time).toBeLessThan(time);
   });
+
+  it('should return all stories with author karma larger than specific value', async () => {
+    const numberOfStories = 10;
+    const authorKarma = 1000;
+    const stories = await apiService.getLatestStoriesWithUsersMinimumKarma(
+      numberOfStories,
+      authorKarma,
+    );
+    expect(stories.length).toBeLessThanOrEqual(numberOfStories);
+    for (let story of stories) {
+      const author = await apiService.getAuthor(story.by);
+      expect(author.karma).toBeGreaterThanOrEqual(authorKarma);
+    }
+  });
 });
