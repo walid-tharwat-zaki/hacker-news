@@ -40,13 +40,12 @@ export class StoriesAPIService {
                 await axios.get(`${this.BASE_URL}/item/${currentMax - i}.json`)
               ).data;
             } catch (err) {
-              console.log('Error : ', currentMax - i);
+              console.error('Error : ', currentMax - i);
               return null;
             }
           }),
         )
       ).filter((item) => item);
-      console.log('Time : ', items[items.length - 1].time);
       if (items[items.length - 1].time > fromDateUnixTime) {
         stories.push(...items.filter((item) => item.type == ItemType.STORY));
       } else {
@@ -63,6 +62,24 @@ export class StoriesAPIService {
       currentMax -= NUMBER_OF_REQUESTS;
     } while (!allFound);
     return stories;
+  }
+
+  async getPrevStory(id: number) {
+    let currentId = id - 1;
+    while (true) {
+      try {
+        const curStory: Item = (
+          await axios.get(`${this.BASE_URL}/item/${currentId}.json`)
+        ).data;
+        if (curStory.type == ItemType.STORY) {
+          return curStory;
+        }
+        currentId--;
+      } catch (err) {
+        console.error('Error : ', currentId);
+        return null;
+      }
+    }
   }
 
   async getLatestStoriesWithUsersMinimumKarma(

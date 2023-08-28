@@ -11,4 +11,5 @@ export const STORIES: Item[] = new Array(100).fill('').map((e, index) => ({
   deleted: false,
   time: 1692593897 - 100 * index,
   type: ItemType.STORY,
+  id: index,
 }));

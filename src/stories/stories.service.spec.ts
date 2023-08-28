@@ -10,12 +10,7 @@ describe('StoriesService', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [StoriesService, StoriesAPIService],
-    })
-      .overrideProvider(StoriesAPIService)
-      .useValue({
-        getLatestStories: async () => STORIES.splice(0, 25),
-      })
-      .compile();
+    }).compile();
 
     service = module.get<StoriesService>(StoriesService);
     apiService = module.get<StoriesAPIService>(StoriesAPIService);
@@ -33,6 +28,9 @@ describe('StoriesService', () => {
   });
 
   it('should return 10 most occurring words', async () => {
+    jest
+      .spyOn(apiService, 'getLatestStories')
+      .mockImplementation(async () => STORIES.splice(0, 25));
     expect(await service.getMostOccurring(25, 10)).toStrictEqual([
       'keyword0',
       'keyword1',
@@ -45,5 +43,23 @@ describe('StoriesService', () => {
       'keyword8',
       'keyword9',
     ]);
+  });
+
+  it('should return same requested number of recent stories', async () => {
+    const count = 25;
+    expect((await apiService.getLatestStories(count)).length).toBe(count);
+  });
+
+  it('should return all stories till specific time', async () => {
+    const interval = 600; //10 min
+    const time = new Date().getTime() / 1000 - interval;
+    const stories = await apiService.getPostsByDate(time);
+    for (let story of stories) {
+      expect(story.time).toBeGreaterThanOrEqual(time);
+    }
+    const oneStoryBefore = await apiService.getPrevStory(
+      stories[stories.length - 1].id,
+    );
+    expect(oneStoryBefore.time).toBeLessThan(time);
   });
 });
